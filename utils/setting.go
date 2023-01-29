@@ -10,12 +10,18 @@ import (
 var (
 	AppMode    string
 	HttpPort   string
+	JwtKye     string
 	Db         string
 	DbPort     string
 	DbHost     string
 	DbUser     string
 	DbPassword string
 	DbName     string
+	Zone       int
+	AccessKey  string
+	SecretKey  string
+	Bucket     string
+	QiNiuServe string
 )
 
 func init() {
@@ -25,6 +31,7 @@ func init() {
 	}
 	loadServer(file)
 	loadDb(file)
+	LoadQiNiu(file)
 }
 
 // 获取服务器设置
@@ -32,6 +39,7 @@ func loadServer(file *ini.File) {
 	// MustString 默认设置
 	AppMode = file.Section("server").Key("AppMode").MustString("debug")
 	HttpPort = file.Section("server").Key("HttpPort").MustString(":3000")
+	JwtKye = file.Section("server").Key("JwtKey").MustString("xxyyzzhh")
 }
 
 // 获取数据库配置
@@ -42,4 +50,13 @@ func loadDb(file *ini.File) {
 	DbUser = file.Section("database").Key("DbUser").MustString("root")
 	DbPassword = file.Section("database").Key("DbPassWord").MustString("010825lwj")
 	DbName = file.Section("database").Key("DbName").MustString("ginBlog")
+}
+
+// 获取七牛云配置
+func LoadQiNiu(file *ini.File) {
+	Zone = file.Section("qiniu").Key("Zone").MustInt(1)
+	AccessKey = file.Section("qiniu").Key("AccessKey").MustString("")
+	SecretKey = file.Section("qiniu").Key("SecretKey").MustString("")
+	Bucket = file.Section("qiniu").Key("Bucket").MustString("")
+	QiNiuServe = file.Section("qiniu").Key("QiNiuServe").MustString("")
 }

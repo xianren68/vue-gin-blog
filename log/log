@@ -1,0 +1,2 @@
+time="2023-01-29T16:37:17+08:00" level=info Agent=PostmanRuntime-ApipostRuntime/1.1.0 DataSize=98 HostName=USER-20220414JS Ip=127.0.0.1 Method=POST Path=/v1/upload/img SpendTime="666 ms" status=200
+time="2023-01-29T16:39:49+08:00" level=info Agent=PostmanRuntime-ApipostRuntime/1.1.0 DataSize=25 HostName=USER-20220414JS Ip=127.0.0.1 Method=POST Path=/v1/user/add SpendTime="450 ms" status=200
