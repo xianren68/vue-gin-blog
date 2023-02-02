@@ -10,12 +10,23 @@ import (
 
 type User struct {
 	gorm.Model
-	Username string `gorm:"type:varchar(20);not null " json:"username" validate:"required,min=4,max=12" label:"用户名" `
-	Password string `gorm:"type:varchar(500);not null" json:"password"  validate:"required,min=6,max=12" label:"密码" `
+	Username string `gorm:"type:varchar(20);not null " json:"username" validate:"required,min=2,max=10" label:"用户名" `
+	Password string `gorm:"type:varchar(500);not null" json:"password"  validate:"required,min=8,max=18" label:"密码" `
 	Role     int    `gorm:"type:int;DEFAULT:2" json:"role" validate:"required,gte=2" label:"权限"`
 }
 
-// 添加用户到数据库中
+// 获取用户权限
+func GetRole(id int) int {
+	var user User
+	db.Select("*").Where("ID = ?", id).Find(&user)
+	if user.ID > 0 {
+		return user.Role
+	} else {
+		return 3
+	}
+}
+
+// 添加用户
 func CreateUser(data *User) int {
 	// 加密
 	data.Password = scryptPwd(data.Password)
@@ -42,7 +53,9 @@ func DeleteUser(id int) int {
 func EditUser(id int, data *User) int {
 	var user User
 	updateMap := make(map[string]interface{}, 4)
-	updateMap["username"] = data.Username
+	if data.Username != " " {
+		updateMap["username"] = data.Username
+	}
 	updateMap["role"] = data.Role
 	err = db.Model(&user).Where("id = ?", id).Updates(updateMap).Error
 	if err != nil {
@@ -52,7 +65,7 @@ func EditUser(id int, data *User) int {
 }
 
 // 查询用户列表
-func GetUserList(pageSize int, pageNum int) ([]*User, int64) {
+func GetUserList(param string, pageSize int, pageNum int) ([]*User, int64) {
 	// 用来存储列表的切片
 	var users []*User
 	// 总数
@@ -65,8 +78,8 @@ func GetUserList(pageSize int, pageNum int) ([]*User, int64) {
 	} else {
 		offset = (pageNum - 1) * pageSize
 	}
-	err := db.Limit(pageSize).Offset(offset).Find(&users).Error
-	db.Model(&User{}).Count(&total)
+	err := db.Select("id,username,role").Where("username like ?", param+"%").Limit(pageSize).Offset(offset).Find(&users).Error
+	db.Model(&User{}).Where("username like ?", param+"%").Count(&total)
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return nil, 0
 	}
@@ -74,13 +87,18 @@ func GetUserList(pageSize int, pageNum int) ([]*User, int64) {
 
 }
 
-// 用户登录
+// 搜索用户
+
+// 管理员登录
 func UserLogin(username string, password string) int {
 	var user User
 	db.Where("username = ?", username).Find(&user)
 	// 用户不存在
 	if user.ID == 0 {
 		return errormsg.ERROR_USER_NOT_EXIST
+	}
+	if user.Role > 1 {
+		return errormsg.ERROR_USER_NO_RIGHT
 	}
 	PasswordErr := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	// 密码错误

@@ -5,6 +5,7 @@ import (
 	"gin-blog/middleware"
 	"gin-blog/model"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,15 +13,18 @@ import (
 type LoginApi struct {
 }
 
+// 后台登录
 func (L *LoginApi) UserLogin(c *gin.Context) {
 	var user model.User
 	// 绑定到结构体
-	c.ShouldBindJSON(&user)
+	c.ShouldBind(&user)
 	code = model.UserLogin(user.Username, user.Password)
 	token := ""
 	if code == errormsg.SUCCESS {
 		// 设置token
 		token, code = middleware.CreateToken(user.Username)
+		// 设置cookie,携带其role
+		c.SetCookie("role", strconv.Itoa(user.Role), 10*60*60, "/", "localhost", false, false)
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"status": code,
