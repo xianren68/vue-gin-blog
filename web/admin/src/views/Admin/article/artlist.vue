@@ -1,5 +1,5 @@
 <template>
-    <a-card title="文章列表" :bordered="false">
+    <a-card title="文章列表" :bordered="false"  style="height:100">
         <a-input-search v-model:value="param" placeholder="输入文章名搜索" style="width: 200px" @search="searchList" 
             allow-clear />
         <a-button type="primary">
@@ -9,7 +9,7 @@
         @change="handleChange" allowClear>
            
         </a-select>
-        <a-table :dataSource="artList.list" :columns="columns" :pagination="pagination" @change="changePage">
+        <a-table :dataSource="artList.list" :columns="columns" :pagination="pagination" @change="changePage" scroll>
             <template #bodyCell="{ column, text, record }">
                 <template v-if="column.dataIndex == 'img'">
                     <img :src="text" alt="">
@@ -188,4 +188,7 @@ img {
     margin-left: 100px;
     width: 200px;
 }
+.ant-table-body{
+    height: 500px;
+  }
 </style>

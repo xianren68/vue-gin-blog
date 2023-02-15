@@ -69,4 +69,7 @@ const turnRouter = (path)=>{
             float :right;  
         }
     }
+    .ant-layout-content {
+      overflow-y: scroll;
+    }
 </style>
