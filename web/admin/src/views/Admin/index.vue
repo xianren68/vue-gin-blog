@@ -70,6 +70,6 @@ const turnRouter = (path)=>{
         }
     }
     .ant-layout-content {
-      overflow-y: scroll;
+      overflow-y: auto;
     }
 </style>
