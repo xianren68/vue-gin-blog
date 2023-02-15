@@ -67,7 +67,8 @@ import { message } from 'ant-design-vue';
 import 'ant-design-vue/es/message/style/css'
 import { reqUserList, editInfo, deleteUser,addUser } from '@/api'
 import { rulPassword,rulUsername} from '@/utils/rules';
-import router from '@/router'
+import {useRouter} from 'vue-router'
+let router = useRouter()
 // 表格标签长度
 const labelCol = reactive({
     style:{
@@ -157,14 +158,19 @@ const editdata = reactive({
 // 控制是在编辑哪一行
 const edit = (record) => {
     editkey.value = record.ID
+    // 方便在显示时有默认值
     editdata.name = record.username
     editdata.r = record.role
 }
 // 获取cookie中的role
 const getCookie = () => {
-    const list = document.cookie.split("=")
-    let role = list[1].split(";")[0]
-    return role
+    if (document.cookie){
+        const list = document.cookie.split("=")
+        let role = list[1].split(";")[0]
+        return role
+    }
+    return 3
+    
 }
 // 保存编辑
 const saveEdit = async ({ ID, role, username }) => {

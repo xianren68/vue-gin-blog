@@ -18,13 +18,13 @@ const routes = [
                 }
             },
             {
-                path:'/write',
+                path:'/write/:id',
                 name:'write',
                 component:()=>import("@/views/Admin/article/write.vue"),
                 meta:{
                     name:'写文章',
                     isShow:true
-                }
+                },
             },
             {
                 path:'/artlist',

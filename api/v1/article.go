@@ -82,9 +82,10 @@ func (a *ArticleApi) CateList(c *gin.Context) {
 // 获取文章列表
 func (a *ArticleApi) ListArt(c *gin.Context) {
 	var artlist []model.Article
+	param := c.Query("param")
 	pageSize, _ := strconv.Atoi(c.Query("pagesize"))
 	pageNum, _ := strconv.Atoi(c.Query("pagenum"))
-	artlist, code, total := model.ListArt(pageSize, pageNum)
+	artlist, code, total := model.ListArt(param, pageSize, pageNum)
 	c.JSON(http.StatusOK, gin.H{
 		"status": code,
 		"msg":    errormsg.GetMsg(code),

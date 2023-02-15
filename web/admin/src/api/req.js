@@ -1,4 +1,5 @@
 import  axios  from "axios";
+
 // 重写axios方法
 const req = axios.create({
     baseURL:"http://localhost:5000/v1",
@@ -15,4 +16,5 @@ req.interceptors.request.use(function (config){
       }
     return config
 })
+
 export default req

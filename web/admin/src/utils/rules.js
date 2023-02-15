@@ -19,4 +19,11 @@ export const rulPassword = async (_rule,value)=> {
     }
     
 }
+// 不能为空的值的校验规则
+export const rulNotnull = (_rule,value)=>{
+    if (value.trim() == ""){
+        return Promise.reject("请输入值")
+    }
+    return Promise.resolve()
+}
 

@@ -30,12 +30,13 @@
 
 <script setup>
 import {ref,reactive} from "vue"
-import router from '@/router'
+import { useRouter } from "vue-router";
 import {adminLogin} from '@/api'
 import { UserOutlined, LockOutlined } from '@ant-design/icons-vue';
 import { message } from 'ant-design-vue';
 import 'ant-design-vue/es/message/style/css'
 import { rulUsername,rulPassword } from "../utils/rules";
+const router = useRouter()
 // 设置lable固定宽度
 const labelCol = reactive({
     style:{

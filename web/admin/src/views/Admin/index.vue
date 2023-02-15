@@ -31,10 +31,9 @@
 </template>
 
 <script setup>
-import router from '@/router';
 import { useRouter,useRoute } from 'vue-router';
 import {reactive,ref} from 'vue'
-
+const router = useRouter()
 // 退出登录
 const outLogin = ()=>{
   // 删除token
