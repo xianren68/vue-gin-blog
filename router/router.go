@@ -33,8 +33,8 @@ func InitRouter() {
 	NoRouter := router.Group("/v1")
 
 	{
-		// 登录
-		NoRouter.POST("/login", loginApi.UserLogin)
+		// 后台登录
+		NoRouter.POST("admin/login", loginApi.UserLogin)
 		// 添加用户
 		NoRouter.POST("user/add", userApi.Add)
 		// 查询用户列表
@@ -50,6 +50,8 @@ func InitRouter() {
 	JwtRouter := router.Group("/v1")
 	// 使用中间件
 	JwtRouter.Use(middleware.JwtToken())
+	// 使用cookie中间件
+	JwtRouter.Use(middleware.Cookier())
 	{
 
 		// 删除用户

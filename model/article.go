@@ -77,11 +77,11 @@ func CateList(cid int, pageSize int, pageNum int) ([]Article, int, int64) {
 }
 
 // 获取文章列表
-func ListArt(pageSize int, pageNum int) ([]Article, int, int64) {
+func ListArt(param string, pageSize int, pageNum int) ([]Article, int, int64) {
 	var artlist []Article
 	var total int64
-	err := db.Preload("Category").Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&artlist).Error
-	db.Model(&artlist).Count(&total)
+	err := db.Preload("Category").Where("title like ?", param+"%").Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&artlist).Error
+	db.Model(&artlist).Where("title like ?", param+"%").Count(&total)
 	if err != nil {
 		return artlist, errormsg.ERROR_CATE_NOT_EXIST, 0
 	}
