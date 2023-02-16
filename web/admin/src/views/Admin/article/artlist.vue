@@ -188,7 +188,5 @@ img {
     margin-left: 100px;
     width: 200px;
 }
-.ant-table-body{
-    height: 500px;
-  }
+
 </style>
