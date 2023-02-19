@@ -15,3 +15,10 @@ log
 *.ini
 # Dependency directories (remove the comment below to include it)
 # vendor/
+[http]
+ 
+ sslverify = false
+
+[https]
+
+ sslverify = false
