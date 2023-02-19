@@ -11,3 +11,13 @@ vue+gin全栈博客项目
  ##### 3 在根目录执行`go run main.go`启动后端
  ##### 4 在web/admin和web/view分别执行`npm run dev`，启动前后台的项目
  
+##### 项目展示
+ ###### 后台管理
+![image](https://user-images.githubusercontent.com/82361146/219943040-1b358fb7-4c42-42f1-9034-abc77e8fe95f.png)
+![image](https://user-images.githubusercontent.com/82361146/219943089-a2bb5e3b-4b05-42a6-bc33-a181d4b23114.png)
+##### 前台展示
+做的很敷衍😄
+![image](https://user-images.githubusercontent.com/82361146/219943170-1eba0777-6f77-47c5-9cfa-94bc99d4b0fa.png)
+![image](https://user-images.githubusercontent.com/82361146/219943205-b4e16245-ce83-4c00-8a78-1a367fc9a804.png)
+
+
